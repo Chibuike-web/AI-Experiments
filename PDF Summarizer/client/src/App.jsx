@@ -4,6 +4,7 @@ import "./globals.css";
 export default function App() {
 	const [file, setFile] = useState(null);
 	const [parsedText, setParsedText] = useState("");
+	const [summary, setSummary] = useState("");
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -14,6 +15,7 @@ export default function App() {
 
 		const formData = new FormData();
 		formData.append("pdf", file);
+		let result;
 
 		try {
 			const response = await fetch("http://localhost:5000/parse-pdf", {
@@ -21,11 +23,27 @@ export default function App() {
 				body: formData,
 			});
 
-			const result = await response.json();
-			console.log("Parsed Data:", result);
+			result = await response.json();
 			setParsedText(result.text);
 		} catch (error) {
 			console.error("Error uploading the file:", error);
+		}
+
+		try {
+			const res = await fetch("http://localhost:5000/summarize", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ text: result.text }),
+			});
+
+			if (!res.ok) {
+				throw new Error("Issue fetching summary");
+			}
+
+			const data = await res.json();
+			setSummary(data.summary);
+		} catch (error) {
+			console.error(error.message);
 		}
 	};
 
@@ -42,7 +60,7 @@ export default function App() {
 			<button type="submit" className="bg-black text-white px-4 py-2 rounded">
 				Parse PDF
 			</button>
-			<pre className="whitespace-pre-wrap text-sm">{parsedText}</pre>
+			<pre className="whitespace-pre-wrap text-sm">{summary}</pre>
 		</form>
 	);
 }
