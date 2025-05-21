@@ -31,7 +31,6 @@ app.post("/parse-pdf", async (req, res) => {
 
 app.post("/summarize", async (req, res) => {
 	const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-
 	const { text } = req.body;
 	if (!text) {
 		return res.status(400).json({ error: "No text provided" });
@@ -58,7 +57,6 @@ app.post("/summarize", async (req, res) => {
 			return res
 				.status(geminiResponse.status)
 				.json({ error: "Failed to get summary from Gemini API", details: errorText });
-			s;
 		}
 
 		const data = await geminiResponse.json();

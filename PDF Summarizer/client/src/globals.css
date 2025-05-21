@@ -1,7 +1,4 @@
 @import "tailwindcss";
 
 body {
-	height: 100vh;
-	justify-items: center;
-	align-content: center;
 }
