@@ -3,7 +3,7 @@ import cors from "cors";
 import multer from "multer";
 import dotenv from "dotenv";
 import path from "path";
-import fs from "node:fs";
+import fs from "fs";
 
 dotenv.config();
 
