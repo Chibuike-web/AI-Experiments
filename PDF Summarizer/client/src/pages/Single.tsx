@@ -1,9 +1,6 @@
-import { FormEvent, useState } from "react";
 import { ChooseFileCard } from "../components/ChooseFileCard";
 import { FileUploadCard } from "../components/FileUploadCard";
-import { ChangeEvent } from "react";
-import { truncate } from "node:fs";
-import { useHandleFile } from "../Hooks";
+import { useHandleFile } from "../SingleHooks";
 
 export default function Single() {
 	const {
