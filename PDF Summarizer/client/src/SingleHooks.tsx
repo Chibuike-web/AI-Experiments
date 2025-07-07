@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useRef, useState } from "react";
 
 const MAXSIZEINBYTES = 50 * 1024 * 1024;
 export const useHandleFile = () => {
@@ -6,11 +6,15 @@ export const useHandleFile = () => {
 	const [parsedText, setParsedText] = useState("");
 	const [summary, setSummary] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
+	const uploadRef = useRef<HTMLInputElement | null>(null);
 
 	const onClear = () => {
 		setFile(null);
 		setParsedText("");
 		setSummary("");
+		if (uploadRef.current) {
+			uploadRef.current.value = "";
+		}
 	};
 
 	const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -80,6 +84,7 @@ export const useHandleFile = () => {
 		isLoading,
 		summary,
 		parsedText,
+		uploadRef,
 		onClear,
 		handleFileChange,
 		handleParse,

@@ -12,13 +12,14 @@ export default function Single() {
 		handleFileChange,
 		handleParse,
 		handleSummarize,
+		uploadRef,
 	} = useHandleFile();
 
 	return (
-		<main className="grid grid-cols-[350px_1fr] w-full h-screen">
-			<aside className="p-6 bg-gray-100 h-full flex flex-col gap-6">
+		<main className="flex w-full h-screen">
+			<aside className="p-6 bg-gray-100 h-full flex flex-col gap-6 max-w-[350px] min-w-[350px] overflow-y-auto">
 				<form onSubmit={handleParse} className="w-full flex flex-col gap-8">
-					<ChooseFileCard handleFileChange={handleFileChange} />
+					<ChooseFileCard handleFileChange={handleFileChange} uploadRef={uploadRef} />
 
 					{!parsedText && (
 						<button type="submit" className="bg-black text-white px-4 py-2 rounded">
@@ -38,23 +39,22 @@ export default function Single() {
 				</form>
 				<div>{file && <FileUploadCard file={file} onClear={onClear} />}</div>
 			</aside>
-			{summary ||
-				(parsedText && (
-					<aside className="p-6 flex flex-col gap-6 xl:flex-row items-start ">
-						{parsedText && (
-							<div className="w-full xl:w-1/2 bg-gray-200 p-4 rounded-md ">
-								<h2 className="font-bold text-[2rem] mb-2">Parsed Text</h2>
-								<p className="whitespace-pre-wrap text-xl">{parsedText}</p>
-							</div>
-						)}
-						{summary && (
-							<div className="w-full xl:w-1/2 bg-gray-200 p-4 rounded-md">
-								<h2 className="font-bold text-[2rem] mb-2">Summary</h2>
-								<p className="whitespace-pre-wrap text-xl">{summary}</p>
-							</div>
-						)}
-					</aside>
-				))}
+			{parsedText && (
+				<aside className="p-6 h-full flex flex-col gap-6 xl:flex-row items-start overflow-y-auto">
+					{parsedText && (
+						<div className="w-full xl:w-1/2 bg-gray-200 p-4 rounded-md h-[1000px] md:h-full overflow-auto ">
+							<h2 className="font-bold text-[2rem] mb-2">Parsed Text</h2>
+							<p className="whitespace-pre-wrap text-xl">{parsedText}</p>
+						</div>
+					)}
+					{summary && (
+						<div className="w-full xl:w-1/2 bg-gray-200 h-[1000px] md:h-full  overflow-auto p-4 rounded-md">
+							<h2 className="font-bold text-[2rem] mb-2">Summary</h2>
+							<p className="whitespace-pre-wrap text-xl">{summary}</p>
+						</div>
+					)}
+				</aside>
+			)}
 		</main>
 	);
 }

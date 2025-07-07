@@ -1,9 +1,16 @@
 import { UploadIcon } from "../Icons";
 
-export const ChooseFileCard = ({ handleFileChange }) => {
+export const ChooseFileCard = ({ handleFileChange, uploadRef }) => {
 	return (
 		<label className="w-full relative block">
-			<input type="file" accept="application/pdf" onChange={handleFileChange} className="hidden" />
+			<input
+				type="file"
+				accept="application/pdf"
+				ref={uploadRef}
+				onChange={handleFileChange}
+				className="hidden"
+				multiple
+			/>
 
 			<div className=" border border-gray-200 border-dashed rounded-[12px] w-full flex flex-col items-center p-8 bg-white">
 				<UploadIcon />
